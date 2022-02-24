@@ -9,28 +9,49 @@
     <link rel="stylesheet" type="text/css" href="style.css" />
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <div class="bg-black w-screen h-screen text-slate-100 p-4 overflow-x-hidden overflow-y-auto">
+    <div class="bg-black w-screen h-screen tautheext-slate-100 p-4 overflow-x-hidden overflow-y-auto">
         <div id="app">
             <!-- Navbar -->
             <div class="flex flex-col sm:flex-row">
                 <!-- Title -->
-                <div class="text-xl flex-grow">Waterloo<span class="text-amber-300 font-bold"> SearchWorks</span></div>
+                <div class="text-white text-xl flex-grow">Waterloo<span class="text-amber-300 font-bold"> SearchWorks</span></div>
 
                 <!-- Searchbar -->
                 <div v-if="status == STATUS.READY"
-                    class="flex-none text-slate-900 p-1 pl-2 rounded-lg w-full sm:w-96 mt-2 sm:mt-0 sm:mr-4 bg-white flex flex-row">
-                    <input type="text" v-model="search" placeholder="Search..." class="flex-grow outline-0"
-                        @change="UpdateURLSearch">
-                    <button class="flex-none h-5 w-5 text-slate-700 hover:text-slate-500 m-auto mr-1"
-                        v-if="search != ''" @click="search = '';UpdateURLSearch()">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M6 18L18 6M6 6l12 12" />
-                        </svg>
+                    class="flex-none text-slate-900 p-1 pl-2 rounded-lg w-full sm:w-96 mt-2 sm:mt-0 bg-white flex flex-row">
+                    <input type="text" v-model="search" placeholder="Search..." class="flex-grow outline-0">
+                </div>
+
+                <!-- Search Button -->
+                <div class = "bg-sky-800 p-2 rounded-md drop-shadow-md hover:bg-sky-700">
+                    <button @click="UpdateURLSearch"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-5 h-5"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg></button>
+                </div>
+
+                <!-- Dropdown Menu -->
+                <div class="btn-group">
+                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Algorithm
                     </button>
+                    <div class="dropdown-menu">
+                        <ul>
+                            <li>
+                                <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">1</a>
+                            </li>
+                            <li>
+                                <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">2</a>
+                            </li>
+                            <li>
+                                <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">3</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <hr class="border-slate-500 mt-1">
@@ -48,10 +69,10 @@
             <div v-else-if="status == STATUS.LOADING" class="text-center text-lg mt-32">Loading...</div>
 
             <!-- Main page -->
-            <div id="body" class="sm:p-4 flex flex-col" v-else>
+            <div v-else-if="status==STATUS.READY" id="body" class="sm:p-4 flex flex-col" v-else>
 <!--                </div>-->
-                <div class="flex flex-col justify-between w-full sm:flex-row text-center sm:text-left mt-2 sm:mt-0">
-                    <div class="m-2 mt-0 flex-none">Found {{filteredPostings.length}} of {{postings.length}} jobs
+                <div class="flex flex-col justify-between w-full sm:flex-row text-center sm:text-left sm:mt-0">
+                    <div class="text-white m-2 mt-0 flex-none">Found {{filteredPostings ? filteredPostings.length : -100}} of {{postings ? postings.length : -100}} jobs
                         (showing 1-25)</div>
                     <div class="flex-grow"></div>
                     <div class="m-2 mt-0 flex-none flex flex-row mx-auto sm:mx-2">
@@ -62,9 +83,9 @@
                                     d="M15 19l-7-7 7-7" />
                             </svg>
                         </button>
-                        <div class="text-slate-100">{{page+1}} of {{Math.ceil(filteredPostings.length / 25)}}</div>
+                        <div class="text-slate-100">{{page+1}} of {{Math.ceil(filteredPostings ? filteredPostings.length / 25 : -100)}}</div>
                         <button class="text-slate-100"
-                            @click="page = Math.min(page+1, Math.ceil(filteredPostings.length / 25) - 1)">
+                            @click="page = Math.min(page+1, Math.ceil(filteredPostings ? filteredPostings.length / 25 : -100) - 1)">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -73,18 +94,12 @@
                         </button>
                     </div>
                 </div>
-                <!-- Settings modal -->
-                <div v-if="settingsOpen">
-                    <div class="fixed top-0 left-0 w-full h-full z-20"
-                        style="background-color: rgba(15, 23, 42, 0.678);">
-                    </div>
-                </div>
 
                 <!-- List of jobs -->
-                <div class="flex flex-col space-y-4">
-                    <div class="bg-white w-full drop-shadow-md rounded-md p-6 flex flex-col sm:flex-row sm:space-x-12"
+                <div class="flex flex-col space-y-2">
+                    <div class="bg-white w-full drop-shadow-md rounded-md p-2 flex flex-col sm:flex-row sm:space-x-12"
                         v-for="job of filteredPostings.slice(25*page,25*page+25)" v-bind:id="job.Id">
-                        <div class="flex-none w-full sm:w-1/6 overflow-x-wrap">
+                        <div class="text-white flex-none w-full sm:w-auto overflow-x-wrap">
 
                             <!-- Shortlist / blacklist buttons -->
                             <button
@@ -99,42 +114,27 @@
                                 class="mx-auto text-md m-3 bg-gray-600 p-2 rounded-md drop-shadow-md hover:bg-gray-500"
                                 @click="viewedlist.push(job.Id);saveLists();openJobPosting(job.Id)"
                                 v-if="!viewedlist.includes(job.Id)">View Job
-<!--                                <a href="job.html" target="__blank">View Job</a>-->
                             </button>
                             <button
                                 class="mx-auto text-md m-3 bg-lime-600 p-2 rounded-md drop-shadow-md hover:bg-lime-500"
                                 @click="viewedlist.splice(shortlist.indexOf(job.Id),1);saveLists()"
                                 v-else>View Job</button>
 
-                            <!-- Tech used -->
-                            <div class="mt-5" v-if="job.Skills.length > 0">
-                                <div class="font-bold">Tech</div>
-                                <hr class="w-24 mt-1">
-                                <div class="flex flex-row flex-wrap">
-                                    <div v-for="tech of job.Skills" class="mr-2">{{tech}}</div>
-                                </div>
-                            </div>
-                        </div>
-
                         <!-- Job description -->
                         <div class="">
                             <div>
                                  <div class="flex flex-row">
-                                <div class="text-2xl text-black w-full sm:w-5/6">{{job.Title}}
+                                <div class="text-lg text-black w-full sm:w-6/6">{{job.Title}}
                                 </div>
                                 </div>
 
-                                <div class="text-lg text-black">{{job.Id}} - {{job.Company}} - {{job.Location}}
+                                <div class="text-md text-black">{{job.Id}} | {{job.Company}} | {{job.Location}}
                                 </div>
                                 <div class="block sm:hidden">
                                     <div class="whitespace-pre-line max-h-48 truncate"
                                         v-bind:id="'summary-readmore-'+job.Id">
                                         {{job.Summary}}
                                     </div>
-                                    <button v-bind:id="'summary-readmorebtn-'+job.Id" class="text-center m-1"
-                                        @click="makeVisible(job.Id,'summary')">[ <span
-                                            class="underline underline-offset-1 decoration-1">Read more</span>
-                                        ]</button>
                                 </div>
                                 <div class="hidden sm:block whitespace-pre-line text-black">
                                     {{job.Summary}}

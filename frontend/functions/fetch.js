@@ -1,24 +1,24 @@
 function fetchJSON(password = "") {
     app.status = STATUS.LOADING
     if (typeof ENDPOINT === 'undefined') {
-        fetch("./data.json")
-            .then(res => {
-                return res.json()
+        fetch('https://quiet-forest-33158.herokuapp.com/https://waterloo-searchworks-api.herokuapp.com/api/searchEngine', {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+                'query': 'Data Science', //TODO change to dynamically accepting header values
+                'algorithmType': '3'
+              },
             })
-            .then(json => {
-                for (const [key, value] of Object.entries(json)) {
-                    app.postings.push(new JobPosting(key, value))
+            .then((response) => response.json())
+            .then((response) => response.results)
+            .then(response => {
+                if (typeof response != "undefined"){
+                    for (let i = 0; i < response.length; i++){
+                        const key = Object.keys(response[i])[0];
+                        const value = response[i][key];
+                        app.postings.push(new JobPosting(key, value))
+                    }
                 }
-                app.postings.forEach(x => {
-                    x.TargetedClusters.themes.forEach(y => {
-                        app.themesAndDegrees.themes.includes(y) || app.themesAndDegrees.themes.push(y)
-                    });
-                    x.TargetedClusters.degrees.forEach(y => {
-                        app.themesAndDegrees.degrees.includes(y) || app.themesAndDegrees.degrees.push(y)
-                    })
-                })
-                app.themesAndDegrees.themes.sort()
-                app.themesAndDegrees.degrees.sort()
                 app.status = STATUS.READY
             })
     } else {
@@ -30,7 +30,6 @@ function fetchJSON(password = "") {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 var json = JSON.parse(xhr.responseText);
                 for (const [key, value] of Object.entries(json)) {
-                    console.log(key, value)
                     app.postings.push(new JobPosting(key, value))
                 }
                 app.postings.forEach(x => {

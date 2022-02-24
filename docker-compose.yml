@@ -1,17 +1,18 @@
 version: "3.9"
 
 services:
-  # frontend:
-  #   image: nginx
-  #   volumes: 
-  #     - ./frontend:/usr/share/nginx/html
-  #   ports:
-  #     - 80:80
-  backend:
-    image: node:alpine
-    working_dir: /app
-    command: node server.js
-    volumes:
-      - ./backend:/app
-    ports:
-      - 3000:3000
+   ui:
+     image: nginx
+     volumes:
+       - ./frontend:/usr/share/nginx/html
+     ports:
+       - 80:80
+#   backend:
+#     image: openjdk:13
+#     working_dir: home\David\Documents\FYDP\JobSearchEngine\backend\SearchEngine\classes\main
+#     command: java main/SearchEngine
+#     volumes:
+##       - ./backend/SearchEngine/classes:/main
+#       - ./backend/SearchEngine:/SearchEngine
+#     ports:
+#       - 5000:5000
