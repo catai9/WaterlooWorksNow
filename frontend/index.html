@@ -99,7 +99,7 @@
                                 v-else>Unshortlist</button>
                             <button
                                 class="mx-auto text-md m-3 bg-gray-600 p-2 rounded-md drop-shadow-md hover:bg-gray-500"
-                                @click="viewedlist.push(job.Id);saveLists();openJobPosting(job.Id)"
+                                @click="viewedlist.push(job.Id);saveLists();openJobPosting(job.Id);"
                                 v-if="!viewedlist.includes(job.Id)">View Job
                             </button>
                             <button

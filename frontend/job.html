@@ -42,7 +42,7 @@
                 <!-- Jobs Page -->
                 <div class="flex flex-col space-y-4">
                     <div class="bg-white w-full drop-shadow-md rounded-md p-6 flex flex-col sm:flex-row sm:space-x-12"
-                        v-for="job of showJobPostings">
+                        v-for="job of showJobPosting" v-bind:id="job.Id">
 
                         <!-- Job description -->
                         <div class="">

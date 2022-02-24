@@ -5,11 +5,11 @@ var app = new Vue({
   data: {
     page: 0,
     postings: [],
+    thisjob: [],
     password: "",
     query: "",
     algorithmType: 3,
     status: STATUS.AUTHENTICATING,
-//    settings: JSON.parse(localStorage.getItem("settings")),
     shortlist: JSON.parse(localStorage.getItem("shortlist")) ?? [],
     blacklist: JSON.parse(localStorage.getItem("blacklist")) ?? [],
     viewedlist: JSON.parse(localStorage.getItem("viewedlist")) ?? [],
@@ -18,10 +18,10 @@ var app = new Vue({
   },
   computed: {
     filteredPostings: function () {
-      return getSearch(app.postings, app.query, app.algorithmType);
+      return app.postings
     },
-    showJobPostings: function () {
-          return getJob()
+    showJobPosting: function () {
+        return app.thisjob
     },
     Exported: function () {
       let shortliststr = ""
@@ -59,7 +59,16 @@ var app = new Vue({
       localStorage.setItem('blacklist', JSON.stringify(app.blacklist))
       localStorage.setItem('viewedlist', JSON.stringify(app.viewedlist))
     },
+    UpdateSearch: () => {
+          let queryParams = new URLSearchParams(window.location.search);
+          queryParams.set("s", app.search);
+          queryParams.set("a", app.algorithmType);
+          history.replaceState(null, null, "?" + queryParams.toString());
+          app.query = app.search
+          fetchJSON(app.password, app.query, app.algorithmType)
+        },
     openJobPosting: (jobId) => {
+        getJob()
         window.open("job.html?jobId=" + jobId, '_blank')
         //TODO: replace url parameter with api call
     }
@@ -78,14 +87,9 @@ if (!(app.settings?.version == settingsVersion)){
 
 localStorage.setItem("settings", JSON.stringify(app.settings))
 
-//// Returns postings that match the set filters
-//function getCleaned(postings) {
-//  return postings
-//}
 
 function getJob() {
     console.log("getJob is called")
-    var job = [];
     fetch('https://quiet-forest-33158.herokuapp.com/https://waterloo-searchworks-api.herokuapp.com/api/posting', {
                 method: 'GET',
                 headers: {
@@ -100,60 +104,10 @@ function getJob() {
                     for (let i = 0; i < response.length; i++){
                         const key = Object.keys(response[i])[0];
                         const value = response[i][key];
-                        job.push(new JobPosting(key, value))
-                        console.log(job) //no job is pulled up
+                        app.thisjob.push(new JobPosting(key, value))
+                        console.log(app.thisjob)
                     }
-                    return job
                 }
 
             })
-}
-
-// Get postings that match search results
-//TODO fix this and link this to search button
-function getSearch(postings, query, algorithmType) {
-//    fetchJSON("", query, algorithmType)
-//}
-//    console.log("showJobPostings is called")
-//    var job = [];
-//    fetch('https://quiet-forest-33158.herokuapp.com/https://waterloo-searchworks-api.herokuapp.com/api/posting', {
-//                method: 'GET',
-//                headers: {
-//                  'Content-Type': 'application/json',
-//                  'docNo': 200001
-//              },
-//            })
-//            .then((response) => response.json())
-//            .then((response) => response.results)
-//            .then(response => {
-//                if (typeof response != "undefined"){
-//                    for (let i = 0; i < response.length; i++){
-//                        const key = Object.keys(response[i])[0];
-//                        const value = response[i][key];
-//                        job.push(new JobPosting(key, value))
-//                    }
-//                    return job
-//                }
-//
-//            })
-//    fetch('https://quiet-forest-33158.herokuapp.com/https://waterloo-searchworks-api.herokuapp.com/api/searchEngine', {
-//                  method: 'GET',
-//                  headers: {
-//                    'Content-Type': 'application/json',
-//                    'query': query, //TODO change to dynamically accepting header values
-//                    'algorithmType': algorithmType
-//                  },
-//                })
-//                .then((response) => response.json())
-//                .then((response) => response.results)
-//                .then(response => {
-//                    if (typeof response != "undefined"){
-//                        for (let i = 0; i < response.length; i++){
-//                            const key = Object.keys(response[i])[0];
-//                            const value = response[i][key];
-//                            app.postings.push(new JobPosting(key, value))
-//                        }
-//                    }
-//                })
-    return postings
 }
