@@ -11,7 +11,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
+<body onload="getJob()">
     <div class="bg-black w-screen h-screen text-slate-100 p-4 overflow-x-hidden overflow-y-auto">
         <div id="app">
             <!-- Navbar -->
@@ -47,23 +47,23 @@
                         <!-- Job description -->
                         <div class="">
                             <div>
-                                 <div class="flex flex-row">
-                                <div class="text-2xl text-black w-full sm:w-5/6">{{job.Title}}
-                                </div>
+                                <div class="flex flex-row">
+                                    <div class="text-2xl text-black w-full sm:w-5/6">{{job.Title}}
+                                    </div>
                                 </div>
 
                                 <div class="text-lg text-black">{{job.Id}} - {{job.Company}} - {{job.Location}}
                                 </div>
-                                </div>
-                                <div class="hidden sm:block whitespace-pre-line text-black">
-                                    {{job.Summary}}
-                                </div>
+                            </div>
+                            <div class="hidden sm:block whitespace-pre-line text-black">
+                                {{job.Summary.join('\n')}}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
     </div>
     </div>
