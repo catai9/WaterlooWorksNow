@@ -1,12 +1,13 @@
-function fetchJSON(password = "") {
+function fetchJSON(password = "", query, algorithmType) {
     app.status = STATUS.LOADING
+    app.postings = []
     if (typeof ENDPOINT === 'undefined') {
         fetch('https://quiet-forest-33158.herokuapp.com/https://waterloo-searchworks-api.herokuapp.com/api/searchEngine', {
               method: 'GET',
               headers: {
                 'Content-Type': 'application/json',
-                'query': 'Data Science', //TODO change to dynamically accepting header values
-                'algorithmType': '3'
+                'query': query, //TODO change to dynamically accepting header values
+                'algorithmType': algorithmType
               },
             })
             .then((response) => response.json())

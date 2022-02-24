@@ -23,6 +23,12 @@
                 <!-- Title -->
                 <div class="text-white text-xl flex-grow">Waterloo<span class="text-amber-300 font-bold"> SearchWorks</span></div>
 
+                <!-- Algorithm Select -->
+                <div v-if="status == STATUS.READY"
+                     class="flex-none text-slate-900 p-1 pl-2 rounded-lg w-full sm:w-12 mt-2 sm:mt-0 bg-white flex flex-row">
+                    <input type="text" v-model="algorithmType" placeholder="Alg" class="flex-grow outline-0">
+                </div>
+
                 <!-- Searchbar -->
                 <div v-if="status == STATUS.READY"
                     class="flex-none text-slate-900 p-1 pl-2 rounded-lg w-full sm:w-96 mt-2 sm:mt-0 bg-white flex flex-row">
@@ -31,28 +37,9 @@
 
                 <!-- Search Button -->
                 <div class = "bg-sky-800 p-2 rounded-md drop-shadow-md hover:bg-sky-700">
-                    <button @click="UpdateURLSearch"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-5 h-5"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg></button>
+                    <button @click="UpdateSearch"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-5 h-5"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg></button>
                 </div>
 
-                <!-- Dropdown Menu -->
-                <div class="btn-group">
-                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Algorithm
-                    </button>
-                    <div class="dropdown-menu">
-                        <ul>
-                            <li>
-                                <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">1</a>
-                            </li>
-                            <li>
-                                <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">2</a>
-                            </li>
-                            <li>
-                                <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">3</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
             </div>
             <hr class="border-slate-500 mt-1">
 
