@@ -35,9 +35,10 @@
                 <div v-if="status == STATUS.READY"
                     class="flex-none text-slate-900 p-1 pl-2 rounded-lg w-full sm:w-12 mt-2 sm:mt-0 bg-white flex flex-row">
                     <select v-model="algorithmType" class="flex-grow outline-0">
-                        <option value="1" selected>Alg 1</option>
-                        <option value="2">Alg 2</option>
-                        <option value="3">Alg 3</option>
+                        <option disabled value="">Algorithm Type</option>
+                        <option selected>1</option>
+                        <option>2</option>
+                        <option>3</option>
                     </select>
                 </div>
 
