@@ -3,18 +3,18 @@ function fetchJSON(password = "", query, algorithmType) {
     app.postings = []
     if (typeof ENDPOINT === 'undefined') {
         fetch('https://quiet-forest-33158.herokuapp.com/https://waterloo-searchworks-api.herokuapp.com/api/searchEngine', {
-              method: 'GET',
-              headers: {
+            method: 'GET',
+            headers: {
                 'Content-Type': 'application/json',
                 'query': query, //TODO change to dynamically accepting header values
-                'algorithmType': algorithmType
-              },
-            })
+                'algorithmType': parseInt(algorithmType)
+            },
+        })
             .then((response) => response.json())
             .then((response) => response.results)
             .then(response => {
-                if (typeof response != "undefined"){
-                    for (let i = 0; i < response.length; i++){
+                if (typeof response != "undefined") {
+                    for (let i = 0; i < response.length; i++) {
                         const key = Object.keys(response[i])[0];
                         const value = response[i][key];
                         app.postings.push(new JobPosting(key, value))

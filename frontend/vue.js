@@ -8,7 +8,7 @@ var app = new Vue({
     thisjob: [],
     password: "",
     query: "",
-    algorithmType: 3,
+    algorithmType: 1,
     status: STATUS.AUTHENTICATING,
     shortlist: JSON.parse(localStorage.getItem("shortlist")) ?? [],
     blacklist: JSON.parse(localStorage.getItem("blacklist")) ?? [],
