@@ -68,7 +68,6 @@ var app = new Vue({
       fetchJSON(app.password, app.query, app.algorithmType)
     },
     openJobPosting: (jobId) => {
-      getJob()
       window.open("job.html?jobId=" + jobId, '_blank')
       //TODO: replace url parameter with api call
     }
@@ -89,12 +88,15 @@ localStorage.setItem("settings", JSON.stringify(app.settings))
 
 
 function getJob() {
-  console.log("getJob is called")
+  const params = new URLSearchParams(window.location.search)
+  jobId = params.get("jobId")
+  console.log("jobId", jobId)
+
   fetch('https://quiet-forest-33158.herokuapp.com/https://waterloo-searchworks-api.herokuapp.com/api/posting', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'docNo': 200001
+      'docNo': parseInt(jobId)
     },
   })
     .then((response) => response.json())
