@@ -8,7 +8,7 @@ var app = new Vue({
     thisjob: [],
     password: "",
     query: "",
-    algorithmType: 3,
+    algorithmType: 1,
     status: STATUS.AUTHENTICATING,
     shortlist: JSON.parse(localStorage.getItem("shortlist")) ?? [],
     blacklist: JSON.parse(localStorage.getItem("blacklist")) ?? [],
@@ -21,7 +21,7 @@ var app = new Vue({
       return app.postings
     },
     showJobPosting: function () {
-        return app.thisjob
+      return app.thisjob
     },
     Exported: function () {
       let shortliststr = ""
@@ -60,17 +60,16 @@ var app = new Vue({
       localStorage.setItem('viewedlist', JSON.stringify(app.viewedlist))
     },
     UpdateSearch: () => {
-          let queryParams = new URLSearchParams(window.location.search);
-          queryParams.set("s", app.search);
-          queryParams.set("a", app.algorithmType);
-          history.replaceState(null, null, "?" + queryParams.toString());
-          app.query = app.search
-          fetchJSON(app.password, app.query, app.algorithmType)
-        },
+      let queryParams = new URLSearchParams(window.location.search);
+      queryParams.set("s", app.search);
+      queryParams.set("a", app.algorithmType);
+      history.replaceState(null, null, "?" + queryParams.toString());
+      app.query = app.search
+      fetchJSON(app.password, app.query, app.algorithmType)
+    },
     openJobPosting: (jobId) => {
-        getJob()
-        window.open("job.html?jobId=" + jobId, '_blank')
-        //TODO: replace url parameter with api call
+      window.open("job.html?jobId=" + jobId, '_blank')
+      //TODO: replace url parameter with api call
     }
   }
 })
@@ -78,10 +77,10 @@ var app = new Vue({
 // Comment out the next line to use local data
 // ENDPOINT = new URL('http://localhost:3000/')
 if (typeof ENDPOINT === 'undefined') {
-    fetchJSON('', app.query, app.algorithmType)
+  fetchJSON('', app.query, app.algorithmType)
 }
 
-if (!(app.settings?.version == settingsVersion)){
+if (!(app.settings?.version == settingsVersion)) {
   app.resetSettings()
 }
 
@@ -89,25 +88,28 @@ localStorage.setItem("settings", JSON.stringify(app.settings))
 
 
 function getJob() {
-    console.log("getJob is called")
-    fetch('https://quiet-forest-33158.herokuapp.com/https://waterloo-searchworks-api.herokuapp.com/api/posting', {
-                method: 'GET',
-                headers: {
-                  'Content-Type': 'application/json',
-                  'docNo': 200001
-              },
-            })
-            .then((response) => response.json())
-            .then((response) => response.results)
-            .then(response => {
-                if (typeof response != "undefined"){
-                    for (let i = 0; i < response.length; i++){
-                        const key = Object.keys(response[i])[0];
-                        const value = response[i][key];
-                        app.thisjob.push(new JobPosting(key, value))
-                        console.log(app.thisjob)
-                    }
-                }
+  const params = new URLSearchParams(window.location.search)
+  jobId = params.get("jobId")
+  console.log("jobId", jobId)
 
-            })
+  fetch('https://quiet-forest-33158.herokuapp.com/https://waterloo-searchworks-api.herokuapp.com/api/posting', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'docNo': parseInt(jobId)
+    },
+  })
+    .then((response) => response.json())
+    .then((response) => response.results)
+    .then(response => {
+      if (typeof response != "undefined") {
+        for (let i = 0; i < response.length; i++) {
+          const key = Object.keys(response[i])[0];
+          const value = response[i][key];
+          app.thisjob = [new JobPosting(key, value)]
+          console.log(app.thisjob)
+        }
+      }
+
+    })
 }

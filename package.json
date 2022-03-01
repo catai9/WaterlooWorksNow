@@ -1,0 +1,7 @@
+{
+    "root": "frontend",
+    "clean_urls": true,
+    "scripts": {
+        "start": "docker-compose up"
+    }
+}

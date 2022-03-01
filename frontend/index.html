@@ -9,10 +9,17 @@
     <link rel="stylesheet" type="text/css" href="style.css" />
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -21,12 +28,18 @@
             <!-- Navbar -->
             <div class="flex flex-col sm:flex-row">
                 <!-- Title -->
-                <div class="text-white text-xl flex-grow">Waterloo<span class="text-amber-300 font-bold"> SearchWorks</span></div>
+                <div class="text-white text-xl flex-grow">Waterloo<span class="text-amber-300 font-bold">
+                        SearchWorks</span></div>
 
                 <!-- Algorithm Select -->
                 <div v-if="status == STATUS.READY"
-                     class="flex-none text-slate-900 p-1 pl-2 rounded-lg w-full sm:w-12 mt-2 sm:mt-0 bg-white flex flex-row">
-                    <input type="text" v-model="algorithmType" placeholder="Alg" class="flex-grow outline-0">
+                    class="flex-none text-slate-900 p-1 pl-2 rounded-lg w-full sm:w-12 mt-2 sm:mt-0 bg-white flex flex-row">
+                    <select v-model="algorithmType" class="flex-grow outline-0">
+                        <option disabled value="">Algorithm Type</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                    </select>
                 </div>
 
                 <!-- Searchbar -->
@@ -36,8 +49,11 @@
                 </div>
 
                 <!-- Search Button -->
-                <div class = "bg-sky-800 p-2 rounded-md drop-shadow-md hover:bg-sky-700">
-                    <button @click="UpdateSearch"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-5 h-5"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg></button>
+                <div class="bg-sky-800 p-2 rounded-md drop-shadow-md hover:bg-sky-700">
+                    <button @click="UpdateSearch"><svg fill="none" stroke="currentColor" stroke-linecap="round"
+                            stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-5 h-5">
+                            <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg></button>
                 </div>
 
             </div>
@@ -57,9 +73,10 @@
 
             <!-- Main page -->
             <div v-else-if="status==STATUS.READY" id="body" class="sm:p-4 flex flex-col" v-else>
-<!--                </div>-->
+                <!--                </div>-->
                 <div class="flex flex-col justify-between w-full sm:flex-row text-center sm:text-left sm:mt-0">
-                    <div class="text-white m-2 mt-0 flex-none">Found {{filteredPostings ? filteredPostings.length : -100}} of {{postings ? postings.length : -100}} jobs
+                    <div class="text-white m-2 mt-0 flex-none">Found {{filteredPostings ? filteredPostings.length :
+                        -100}} of {{postings ? postings.length : -100}} jobs
                         (showing 1-25)</div>
                     <div class="flex-grow"></div>
                     <div class="m-2 mt-0 flex-none flex flex-row mx-auto sm:mx-2">
@@ -70,7 +87,8 @@
                                     d="M15 19l-7-7 7-7" />
                             </svg>
                         </button>
-                        <div class="text-slate-100">{{page+1}} of {{Math.ceil(filteredPostings ? filteredPostings.length / 25 : -100)}}</div>
+                        <div class="text-slate-100">{{page+1}} of {{Math.ceil(filteredPostings ? filteredPostings.length
+                            / 25 : -100)}}</div>
                         <button class="text-slate-100"
                             @click="page = Math.min(page+1, Math.ceil(filteredPostings ? filteredPostings.length / 25 : -100) - 1)">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
@@ -84,9 +102,10 @@
 
                 <!-- List of jobs -->
                 <div class="flex flex-col space-y-2">
+                    <div class="bg-white" v-if="filteredPostings.length == 0" v-else>No jobs found</div>
                     <div class="bg-white w-full drop-shadow-md rounded-md p-2 flex flex-col sm:flex-row sm:space-x-12"
                         v-for="job of filteredPostings.slice(25*page,25*page+25)" v-bind:id="job.Id">
-                        <div class="text-white flex-none w-full sm:w-auto overflow-x-wrap">
+                        <div class="text-white flex-none w-full">
 
                             <!-- Shortlist / blacklist buttons -->
                             <button
@@ -104,27 +123,28 @@
                             </button>
                             <button
                                 class="mx-auto text-md m-3 bg-lime-600 p-2 rounded-md drop-shadow-md hover:bg-lime-500"
-                                @click="viewedlist.splice(shortlist.indexOf(job.Id),1);saveLists()"
-                                v-else>View Job</button>
+                                @click="viewedlist.splice(shortlist.indexOf(job.Id),1);saveLists()" v-else>View
+                                Job</button>
 
-                        <!-- Job description -->
-                        <div class="">
-                            <div>
-                                 <div class="flex flex-row">
-                                <div class="text-lg text-black w-full sm:w-6/6">{{job.Title}}
-                                </div>
-                                </div>
+                            <!-- Job description -->
+                            <div class="">
+                                <div>
+                                    <div class="flex flex-row">
+                                        <div class="text-lg text-black w-full sm:w-6/6">{{job.Title}}
+                                        </div>
+                                    </div>
 
-                                <div class="text-md text-black">{{job.Id}} | {{job.Company}} | {{job.Location}}
-                                </div>
-                                <div class="block sm:hidden">
-                                    <div class="whitespace-pre-line max-h-48 truncate"
-                                        v-bind:id="'summary-readmore-'+job.Id">
+                                    <div class="text-md text-black">{{job.Id}} | {{job.Company}} | {{job.Location}}
+                                    </div>
+                                    <div class="block sm:hidden">
+                                        <div class="whitespace-pre-line max-h-48 truncate"
+                                            v-bind:id="'summary-readmore-'+job.Id">
+                                            {{job.Summary}}
+                                        </div>
+                                    </div>
+                                    <div class="hidden sm:block whitespace-pre-line text-black">
                                         {{job.Summary}}
                                     </div>
-                                </div>
-                                <div class="hidden sm:block whitespace-pre-line text-black">
-                                    {{job.Summary}}
                                 </div>
                             </div>
                         </div>
@@ -132,7 +152,6 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
     </div>
 </body>
