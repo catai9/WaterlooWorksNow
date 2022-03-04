@@ -31,17 +31,6 @@
                 <div class="text-white text-xl flex-grow">Waterloo<span class="text-amber-300 font-bold">
                         SearchWorks</span></div>
 
-                <!-- Algorithm Select -->
-                <div v-if="status == STATUS.READY"
-                    class="flex-none text-slate-900 p-1 pl-2 rounded-lg w-full sm:w-12 mt-2 sm:mt-0 bg-white flex flex-row">
-                    <select v-model="algorithmType" class="flex-grow outline-0">
-                        <option disabled value="">Algorithm Type</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                    </select>
-                </div>
-
                 <!-- Searchbar -->
                 <div v-if="status == STATUS.READY"
                     class="flex-none text-slate-900 p-1 pl-2 rounded-lg w-full sm:w-96 mt-2 sm:mt-0 bg-white flex flex-row">
@@ -148,8 +137,32 @@
                             </div>
                         </div>
                     </div>
+                    <div v-if="filteredPostings.length>0" class="flex flex-col justify-between w-full sm:flex-row text-center sm:text-left sm:mt-0">
+                        <div class="flex-grow"></div>
+                        <div class="m-2 mt-0 flex-none flex flex-row mx-auto sm:mx-2">
+                            <button class="text-slate-100" @click="page = Math.max(page-1, 0)">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                                     stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M15 19l-7-7 7-7" />
+                                </svg>
+                            </button>
+                            <div class="text-slate-100">{{page+1}} of {{Math.ceil(filteredPostings ? filteredPostings.length/25 : -100)}}</div>
+                            <button class="text-slate-100"
+                                    @click="page = Math.min(page+1, Math.ceil(filteredPostings ? filteredPostings.length / 25 : -100) - 1)">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                                     stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M9 5l7 7-7 7" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
                 </div>
+
+
             </div>
+
         </div>
     </div>
     </div>

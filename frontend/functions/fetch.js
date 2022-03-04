@@ -6,8 +6,8 @@ function fetchJSON(password = "", query, algorithmType) {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'query': query, //TODO change to dynamically accepting header values
-                'algorithmType': algorithmType
+                'query': query,
+                'algorithmType': 2 // Hardcoded to our best algorithm for demo
             },
         })
             .then((response) => response.json())
