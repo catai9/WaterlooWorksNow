@@ -76,7 +76,7 @@
                 <div class="flex flex-col justify-between w-full sm:flex-row text-center sm:text-left sm:mt-0">
                     <div class="text-white m-2 mt-0 flex-none">Found {{filteredPostings ? filteredPostings.length :
                         -100}} jobs
-                        (showing 1-25)</div>
+                        (showing {{page*25+1}}-{{(page+1)*25}})</div>
                     <div class="flex-grow"></div>
                     <div class="m-2 mt-0 flex-none flex flex-row mx-auto sm:mx-2">
                         <button class="text-slate-100" @click="page = Math.max(page-1, 0)">
@@ -86,7 +86,8 @@
                                     d="M15 19l-7-7 7-7" />
                             </svg>
                         </button>
-                        <div class="text-slate-100">{{page+1}} of {{Math.ceil(filteredPostings ? filteredPostings.length/25 : -100)}}</div>
+                        <div class="text-slate-100">{{page+1}} of {{Math.ceil(filteredPostings ?
+                            filteredPostings.length/25 : -100)}}</div>
                         <button class="text-slate-100"
                             @click="page = Math.min(page+1, Math.ceil(filteredPostings ? filteredPostings.length / 25 : -100) - 1)">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
