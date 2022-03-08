@@ -21,7 +21,7 @@ class JobPosting {
         output += `\n---\n`
         output += `## ${this.Title}\n`
         output += `### ${this.Id} - ${this.Company} - ${this.Location}`
-        output += `${this.Summary.join('\n')}`
+        output += `${this.Summary.join('')}`
         return output;
     }
 }
