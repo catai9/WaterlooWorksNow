@@ -70,7 +70,8 @@
             </div>
 
             <!-- Loading screen -->
-            <div v-else-if="status == STATUS.LOADING" class="text-center text-lg mt-32">Loading...</div>
+            <div v-else-if="status == STATUS.LOADING" class="text-center text-lg mt-32" style="color:white">Loading...
+            </div>
 
             <!-- Main page -->
             <div v-else-if="status==STATUS.READY" id="body" class="sm:p-4 flex flex-col" v-else>
