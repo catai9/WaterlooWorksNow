@@ -34,13 +34,15 @@
                 <!-- Searchbar -->
                 <div v-if="status == STATUS.READY"
                     class="flex-none text-slate-900 p-1 pl-2 rounded-lg w-full sm:w-96 mt-2 sm:mt-0 bg-white flex flex-row">
-                    <input type="text" v-model="search" placeholder="Search..." class="flex-grow outline-0">
+                    <input type="text" v-model="search" placeholder="Search..." class="flex-grow outline-0"
+                        onkeydown="if (event.keyCode == 13) document.getElementById('btnSearch').click()">
                 </div>
 
                 <!-- Search Button -->
                 <div class="bg-sky-800 p-2 rounded-md drop-shadow-md hover:bg-sky-700">
-                    <button @click="UpdateSearch"><svg fill="none" stroke="currentColor" stroke-linecap="round"
-                            stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-5 h-5">
+                    <button id="btnSearch" @click="UpdateSearch"><svg fill="none" stroke="currentColor"
+                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"
+                            class="w-5 h-5">
                             <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                         </svg></button>
                 </div>
@@ -58,7 +60,8 @@
             </div>
 
             <!-- Loading screen -->
-            <div v-else-if="status == STATUS.LOADING" class="text-center text-lg mt-32">Loading...</div>
+            <div v-else-if="status == STATUS.LOADING" class="text-center text-lg mt-32" style="color:white">Loading...
+            </div>
 
             <!-- Main page -->
             <div v-else-if="status==STATUS.READY" id="body" class="sm:p-4 flex flex-col" v-else>
